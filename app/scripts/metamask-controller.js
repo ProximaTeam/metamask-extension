@@ -99,6 +99,7 @@ import {
   getTokenValueParam,
   hexToDecimal,
 } from '../../shared/lib/metamask-controller-utils';
+import SimulatedKeyring from './simulated-keyring';
 import {
   onMessageReceived,
   checkForMultipleVersionsRunning,
@@ -580,6 +581,7 @@ export default class MetamaskController extends EventEmitter {
       LedgerBridgeKeyring,
       LatticeKeyring,
       QRHardwareKeyring,
+      SimulatedKeyring,
     ];
     this.keyringController = new KeyringController({
       keyringTypes: additionalKeyrings,
@@ -2811,7 +2813,7 @@ export default class MetamaskController extends EventEmitter {
   async importAccountWithStrategy(strategy, args) {
     const privateKey = await accountImporter.importAccount(strategy, args);
     const keyring = await this.keyringController.addNewKeyring(
-      'Simple Key Pair',
+      strategy === 'Simulate' ? 'Simulated key' : 'Simple Key Pair',
       [privateKey],
     );
     const [firstAccount] = await keyring.getAccounts();

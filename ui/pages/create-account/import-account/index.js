@@ -7,6 +7,7 @@ import Dropdown from '../../../components/ui/dropdown';
 import ZENDESK_URLS from '../../../helpers/constants/zendesk-url';
 import JsonImportView from './json';
 import PrivateKeyImportView from './private-key';
+import SimulatedAddressView from './simulated-address';
 
 export default class AccountImportSubview extends Component {
   static contextTypes = {
@@ -16,7 +17,11 @@ export default class AccountImportSubview extends Component {
   state = {};
 
   getMenuItemTexts() {
-    return [this.context.t('privateKey'), this.context.t('jsonFile')];
+    return [
+      this.context.t('privateKey'),
+      this.context.t('jsonFile'),
+      'Simulation address',
+    ];
   }
 
   renderImportView() {
@@ -29,6 +34,8 @@ export default class AccountImportSubview extends Component {
         return <PrivateKeyImportView />;
       case this.context.t('jsonFile'):
         return <JsonImportView />;
+      case 'Simulation address':
+        return <SimulatedAddressView />;
       default:
         return <JsonImportView />;
     }
